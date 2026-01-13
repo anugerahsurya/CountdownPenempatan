@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown Penempatan PNS STIS</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        /* Light Mode - Neutral & High Contrast */
+        --bg-color: #f1f5f9;
+        --container-bg: #ffffff;
+        --text-main: #0f172a;
+        --text-muted: #475569;
+        --accent: #1e293b;
+        --card-bg: #ffffff;
+        --border-color: #cbd5e1; /* Border lebih terlihat */
+        --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] {
+        /* Dark Mode - Deep Slate */
+        --bg-color: #0f172a;
+        --container-bg: #1e293b;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent: #f8fafc;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --border-color: #334155;
+        --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--text-main);
+        padding: 20px;
+      }
+
+      .theme-switch {
+        position: fixed;
+        top: 25px;
+        right: 25px;
+        cursor: pointer;
+        background: var(--container-bg);
+        border: 2px solid var(--border-color);
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-weight: 500;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: var(--shadow);
+        z-index: 100;
+      }
+
+      .container {
+        background: var(--container-bg);
+        border-radius: 24px;
+        padding: 60px 40px;
+        width: 100%;
+        max-width: 600px;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow);
+        text-align: center; /* Menengahkah semua teks */
+      }
+
+      h1 {
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 2rem;
+        letter-spacing: -1px;
+      }
+
+      .target-date {
+        font-weight: 400;
+        color: var(--text-muted);
+        margin-bottom: 40px;
+        font-size: 1rem;
+        display: block;
+      }
+
+      #countdown {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 50px;
+      }
+
+      .time-box {
+        background: var(--card-bg);
+        padding: 25px 5px;
+        border-radius: 16px;
+        border: 2px solid var(--border-color); /* Border dipertegas */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .time-box span {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--accent);
+        line-height: 1;
+        margin-bottom: 8px;
+      }
+
+      .time-box label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+
+      .quote-container {
+        padding-top: 40px;
+        border-top: 2px solid var(--border-color);
+        max-width: 500px;
+        margin: 0 auto; /* Tengah secara horizontal */
+      }
+
+      #quote {
+        font-weight: 400;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-main);
+        margin-bottom: 15px;
+        font-style: italic;
+      }
+
+      #author {
+        display: block;
+        font-weight: 600;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      @media (max-width: 550px) {
+        .container {
+          padding: 40px 20px;
+        }
+        #countdown {
+          gap: 8px;
+        }
+        .time-box {
+          padding: 15px 5px;
+          border-width: 1px;
+        }
+        .time-box span {
+          font-size: 1.6rem;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body data-theme="light">
+    <button class="theme-switch" onclick="toggleTheme()">
+      <span id="theme-icon">🌙</span> <span id="theme-text">Dark Mode</span>
+    </button>
+
+    <div class="container">
+      <h1 id="title">Penempatan PNS STIS</h1>
+      <span class="target-date" id="target-text">Menghitung waktu...</span>
+
+      <div id="countdown">
+        <div class="time-box">
+          <span id="days">00</span>
+          <label>Hari</label>
+        </div>
+        <div class="time-box">
+          <span id="hours">00</span>
+          <label>Jam</label>
+        </div>
+        <div class="time-box">
+          <span id="minutes">00</span>
+          <label>Menit</label>
+        </div>
+        <div class="time-box">
+          <span id="seconds">00</span>
+          <label>Detik</label>
+        </div>
+      </div>
+
+      <div class="quote-container">
+        <p id="quote">"Satu data untuk Indonesia yang lebih baik."</p>
+        <span id="author">Statistisi Muda</span>
+      </div>
+    </div>
+
+    <script>
+      // --- LOGIKA TANGGAL ---
+      const phase1 = new Date("March 1, 2026 00:00:00").getTime();
+      const phase2 = new Date("March 15, 2026 00:00:00").getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        let targetDate = phase1;
+        let labelText = "Target: 1 Maret 2026";
+
+        if (now > phase1) {
+          targetDate = phase2;
+          labelText = "Fase Penugasan Akhir: 15 Maret 2026";
+          document.getElementById("title").innerText = "Fase Akhir Penempatan";
+        }
+
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          document.getElementById("countdown").innerHTML =
+            "<h3 style='grid-column: span 4'>Selamat Mengabdi!</h3>";
+          return;
+        }
+
+        document.getElementById("target-text").innerText = labelText;
+
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const h = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = d
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("hours").innerText = h
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("minutes").innerText = m
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("seconds").innerText = s
+          .toString()
+          .padStart(2, "0");
+      }
+
+      // --- LOGIKA QUOTES ---
+      const quotes = [
+        {
+          text: "Bekerja dengan data, mengabdi dengan hati.",
+          author: "Insan BPS",
+        },
+        {
+          text: "Penempatan hanyalah titik awal koordinat pengabdianmu.",
+          author: "Alumni STIS",
+        },
+        {
+          text: "Jangan tanya di mana kau ditempatkan, tanyalah apa yang bisa kau berikan.",
+          author: "Statistisi Ahli",
+        },
+        {
+          text: "Integritas adalah kedaulatan seorang abdi negara.",
+          author: "Prinsip Kerja",
+        },
+        {
+          text: "Statistik adalah mata rantai pembangunan bangsa.",
+          author: "Visi Indonesia",
+        },
+      ];
+
+      function setRandomQuote() {
+        const q = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById("quote").innerText = `"${q.text}"`;
+        document.getElementById("author").innerText = q.author;
+      }
+
+      // --- LOGIKA DARK MODE ---
+      function toggleTheme() {
+        const body = document.body;
+        const btnText = document.getElementById("theme-text");
+        const btnIcon = document.getElementById("theme-icon");
+
+        if (body.getAttribute("data-theme") === "light") {
+          body.setAttribute("data-theme", "dark");
+          btnText.innerText = "Light Mode";
+          btnIcon.innerText = "☀️";
+        } else {
+          body.setAttribute("data-theme", "light");
+          btnText.innerText = "Dark Mode";
+          btnIcon.innerText = "🌙";
+        }
+      }
+
+      setInterval(updateCountdown, 1000);
+      setInterval(setRandomQuote, 8000);
+      updateCountdown();
+    </script>
+  </body>
+</html>
