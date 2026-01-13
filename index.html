@@ -209,31 +209,63 @@
       </div>
     </div>
 
+    <
     <script>
-      // --- LOGIKA TANGGAL ---
-      const phase1 = new Date("March 1, 2026 00:00:00").getTime();
-      const phase2 = new Date("March 15, 2026 00:00:00").getTime();
+      // ====== SET TANGGAL ======
+      const nowInit = new Date();
+
+      // Pengumuman hari ini jam 13.00
+      const announcement = new Date(
+        nowInit.getFullYear(),
+        nowInit.getMonth(),
+        nowInit.getDate(),
+        13,
+        0,
+        0
+      ).getTime();
+
+      // TMT & Fase Akhir
+      const tmtDate = new Date("March 1, 2026 00:00:00").getTime();
+      const finalPhase = new Date("March 15, 2026 00:00:00").getTime();
 
       function updateCountdown() {
         const now = new Date().getTime();
-        let targetDate = phase1;
-        let labelText = "Target: 1 Maret 2026";
 
-        if (now > phase1) {
-          targetDate = phase2;
-          labelText = "Fase Penugasan Akhir: 15 Maret 2026";
-          document.getElementById("title").innerText = "Fase Akhir Penempatan";
-        }
+        let targetDate;
+        let titleText;
+        let labelText;
 
-        const distance = targetDate - now;
+        // ====== LOGIKA FASE ======
+        if (now < announcement) {
+          // FASE 1
+          targetDate = announcement;
+          titleText = "Pengumuman Penempatan";
+          labelText = "Hari ini • 13.00 WIB";
+        } else if (now < tmtDate) {
+          // FASE 2
+          targetDate = tmtDate;
+          titleText = "Menuju TMT PNS STIS";
+          labelText = "Target: 1 Maret 2026";
+        } else if (now < finalPhase) {
+          // FASE 3
+          targetDate = finalPhase;
+          titleText = "Fase Penugasan Awal";
+          labelText = "Target: 15 Maret 2026";
+        } else {
+          // SELESAI
+          document.getElementById("title").innerText = "Selamat Mengabdi";
+          document.getElementById("target-text").innerText =
+            "Perjalanan pengabdian telah dimulai";
 
-        if (distance < 0) {
           document.getElementById("countdown").innerHTML =
-            "<h3 style='grid-column: span 4'>Selamat Mengabdi!</h3>";
+            "<h3 style='grid-column: span 4'>🇮🇩 Mengabdi untuk Negeri</h3>";
           return;
         }
 
+        document.getElementById("title").innerText = titleText;
         document.getElementById("target-text").innerText = labelText;
+
+        const distance = targetDate - now;
 
         const d = Math.floor(distance / (1000 * 60 * 60 * 24));
         const h = Math.floor(
@@ -256,27 +288,23 @@
           .padStart(2, "0");
       }
 
-      // --- LOGIKA QUOTES ---
+      // ====== QUOTES ======
       const quotes = [
         {
           text: "Bekerja dengan data, mengabdi dengan hati.",
           author: "Insan BPS",
         },
         {
-          text: "Penempatan hanyalah titik awal koordinat pengabdianmu.",
+          text: "Penempatan adalah awal koordinat pengabdian.",
           author: "Alumni STIS",
         },
         {
-          text: "Jangan tanya di mana kau ditempatkan, tanyalah apa yang bisa kau berikan.",
-          author: "Statistisi Ahli",
+          text: "TMT menandai tanggung jawab, bukan sekadar status.",
+          author: "Statistisi Senior",
         },
         {
-          text: "Integritas adalah kedaulatan seorang abdi negara.",
-          author: "Prinsip Kerja",
-        },
-        {
-          text: "Statistik adalah mata rantai pembangunan bangsa.",
-          author: "Visi Indonesia",
+          text: "Integritas adalah fondasi utama abdi negara.",
+          author: "Nilai ASN",
         },
       ];
 
@@ -286,7 +314,7 @@
         document.getElementById("author").innerText = q.author;
       }
 
-      // --- LOGIKA DARK MODE ---
+      // ====== DARK MODE ======
       function toggleTheme() {
         const body = document.body;
         const btnText = document.getElementById("theme-text");
