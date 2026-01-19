@@ -209,7 +209,6 @@
       </div>
     </div>
 
-    <
     <script>
       // ====== SET TANGGAL ======
       const nowInit = new Date();
@@ -236,12 +235,7 @@
         let labelText;
 
         // ====== LOGIKA FASE ======
-        if (now < announcement) {
-          // FASE 1
-          targetDate = announcement;
-          titleText = "Pengumuman Penempatan";
-          labelText = "Hari ini • 13.00 WIB";
-        } else if (now < tmtDate) {
+        if (now < tmtDate) {
           // FASE 2
           targetDate = tmtDate;
           titleText = "Menuju TMT PNS STIS";
